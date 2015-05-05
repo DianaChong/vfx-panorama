@@ -3,7 +3,7 @@ function [featureX, featureY, neighbourInt, R] = harrisFeatureDetection(Images, 
     [row, col, channel] = size(Images);
     
     images = rgb2gray(Images);
-    %imshow(images);
+    imshow(images);
     
     % Compute x and y derivatives of image
     % using G of RGB

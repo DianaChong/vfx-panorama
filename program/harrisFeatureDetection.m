@@ -1,9 +1,9 @@
-function [featureX, featureY, R] = harrisFeatureDetection(Images, filtersize, sigma, k)
+function [featureX, featureY, neighbourInt, R] = harrisFeatureDetection(Images, filtersize, sigma, k)
 
     [row, col, channel] = size(Images);
     
     images = rgb2gray(Images);
-    imshow(images);
+    %imshow(images);
     
     % Compute x and y derivatives of image
     % using G of RGB
@@ -56,9 +56,15 @@ function [featureX, featureY, R] = harrisFeatureDetection(Images, filtersize, si
                     fnum = fnum + 1;
                 end
             end
+            neighbourNum = 1;
             for m = i-floor(wsize/2) : i+floor(wsize/2)
                 for n = j-floor(wsize/2) : j+floor(wsize/2)
-                    %disp(images(m,n));
+                    if(xpos <= row && ypos <= col)
+                        if(map(xpos, ypos) == 1)
+                            neighbourInt(fnum-1, neighbourNum) = images(m,n);
+                            neighbourNum = neighbourNum + 1;
+                        end
+                    end
                     if( m~=xpos || n~=ypos )
                         map(m,n) = 0;
                     end
@@ -66,9 +72,12 @@ function [featureX, featureY, R] = harrisFeatureDetection(Images, filtersize, si
             end
         end
     end
-%    imshow(map);
-%    disp(fnum);
-%     for i = 1:fnum-1
-%         fprintf('fx=%d ,fy=%d\n', featureX(i), featureY(i));
-%     end
+    fnum = fnum - 1;
+    imshow(map);
+    %{
+    disp(fnum);
+    disp(numel(featureX));
+    disp(numel(featureY));
+    disp(size(neighbourInt));disp('------------');
+    %}
 end

@@ -18,7 +18,14 @@ function main(folder)
     for i = 1:number
         filename = [folder, '/', files(i).name];
         img = cylindricalProjection(imread(filename), 800);
-        harrisFeatureDetection(img, filtersize, sigma, k);
+        [featureX, featureY, neighbourInt, fnum, R] = harrisFeatureDetection(img, filtersize, sigma, k);
+        %{
+        for j = 1:fnum
+            fprintf('%d,%d: fx=%d ,fy=%d\n', i, j, featureX(j), featureY(j));
+            fprintf([repmat('%f\t', 1, size(neighbourInt, 2)) '\n'], neighbourInt');
+        end
+        fprintf('---------------------------------------------------\n');
+        %}
     end
     
     disp('done!');

@@ -1,4 +1,4 @@
-function [featureX, featureY, neighbourInt, fnum, R] = harrisFeatureDetection(Images, filtersize, sigma, k)
+function [featureX, featureY, neighbourInt, R] = harrisFeatureDetection(Images, filtersize, sigma, k)
 
     [row, col, channel] = size(Images);
     

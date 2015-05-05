@@ -57,5 +57,51 @@ function main(folder)
         mfile.match = match;
     end
     
+    % display feature matching
+    disp('Display feature matching.');
+    i = 1;
+        mstr = sprintf('match_%02d', i);
+        mfile = matfile(mstr);
+        match = mfile.match;
+        [row, col] = size(match);
+        
+        filename = [folder, '/', files(i).name];
+        img = cylindricalProjection(imread(filename), 700);
+        
+        filename2 = [folder, '/', files(i+1).name];
+        img2 = cylindricalProjection(imread(filename2), 700);
+        imshow([img img2]); 
+        [row1, col1] = size(img);
+        hold on; 
+        
+        for j = 1:row
+            mstr1 = sprintf('mat_%02d', i);
+            mstr2 = sprintf('mat_%02d', i+1);
+            mfile1 = matfile(mstr1);
+            mfile2 = matfile(mstr2);
+            idx1 = match(j,1);
+            idx2 = match(j,2);
+            fx1 = mfile1.featureX;
+            fx2 = mfile2.featureX;
+            
+            fy1 = mfile1.featureY;
+            fy2 = mfile2.featureY;
+            
+            x1 = fx1(idx1);
+            x2 = fx2(idx2);
+            
+            y1 = fy1(idx1);
+            y2 = fy2(idx2);
+            disp('~~~~~~~~~~~~~~~~~~~~~~~');
+            disp(x1);
+            disp(x2);
+            disp(y1);
+            disp(y2);
+            disp('~~~~~~~~~~~~~~~~~~~~~~~');
+            
+            line ([y1, col1+y2],[x1, x2]);
+            hold on; 
+        end
+    
     disp('done!');
 end

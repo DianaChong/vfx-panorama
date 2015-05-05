@@ -15,7 +15,6 @@ function main(folder)
 
     % feature detection
     disp('Feature detection: Harris corner detection.');
-    
     for i = 1:number
         % create a matfile for each image
         mstr = sprintf('mat_%02d.mat', i);
@@ -36,7 +35,6 @@ function main(folder)
         mfile.featureX = featureX;
         mfile.featureY = featureY;
         mfile.neighbourInt = neighbourInt;
-
     end
     
     disp('done!');

@@ -3,7 +3,7 @@ function [featureX, featureY, neighbourInt, R] = harrisFeatureDetection(Images, 
     [row, col, channel] = size(Images);
     
     images = rgb2gray(Images);
-    imshow(images);
+    %imshow(images);
     
     % Compute x and y derivatives of image
     % using G of RGB
@@ -33,8 +33,22 @@ function [featureX, featureY, neighbourInt, R] = harrisFeatureDetection(Images, 
     map(R > threshold*1.2) = 1;
     
     % Compute local maximum of R
-    wsize = 17;
+    wsize = 9;
     fnum = 1;
+    
+    % Crop 
+    for i = row-mod(row, wsize):row
+        for j = 1:col
+            map(i,j) = 0;
+        end
+    end
+    
+    for i = col-mod(col, wsize):col
+        for j = 1:row
+            map(j,i) = 0;
+        end
+    end
+    
     for i = ceil(wsize/2) : wsize : row-floor(wsize/2)
         for j = ceil(wsize/2) : wsize : col-floor(wsize/2)
             window = R(i-floor(wsize/2) : i+floor(wsize/2), j-floor(wsize/2) : j+floor(wsize/2));
